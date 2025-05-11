@@ -52,4 +52,12 @@ return [
         'version' => '6.7.2',
         'type' => 'css',
     ],
+    '@fortawesome/fontawesome-free/css/solid.min.css' => [
+        'version' => '6.7.2',
+        'type' => 'css',
+    ],
+    '@fortawesome/fontawesome-free/css/brands.min.css' => [
+        'version' => '6.7.2',
+        'type' => 'css',
+    ],
 ];
