@@ -30,6 +30,9 @@ class Student
     #[ORM\Column(nullable: true)]
     private ?\DateTime $updatedAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'students')]
+    private ?Classroom $classroom = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -96,6 +99,18 @@ class Student
     public function setUpdatedAt(?\DateTime $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getClassroom(): ?Classroom
+    {
+        return $this->classroom;
+    }
+
+    public function setClassroom(?Classroom $classroom): static
+    {
+        $this->classroom = $classroom;
 
         return $this;
     }

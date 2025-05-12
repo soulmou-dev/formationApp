@@ -6,8 +6,10 @@ use App\Repository\ModuleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ModuleRepository::class)]
+#[UniqueEntity(fields: ['name',], message: 'Cet module existe déja.')]
 class Module
 {
     #[ORM\Id]
@@ -36,11 +38,18 @@ class Module
     #[ORM\Column(nullable: true)]
     private ?\DateTime $updatedAt = null;
 
+    /**
+     * @var Collection<int, Classroom>
+     */
+    #[ORM\ManyToMany(targetEntity: Classroom::class, mappedBy: 'modules')]
+    private Collection $modules;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->courses = new ArrayCollection();
         $this->teachers = new ArrayCollection();
+        $this->modules = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,6 +149,33 @@ class Module
     public function setUpdatedAt(?\DateTime $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Classroom>
+     */
+    public function getModules(): Collection
+    {
+        return $this->modules;
+    }
+
+    public function addModule(Classroom $module): static
+    {
+        if (!$this->modules->contains($module)) {
+            $this->modules->add($module);
+            $module->addModule($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModule(Classroom $module): static
+    {
+        if ($this->modules->removeElement($module)) {
+            $module->removeModule($this);
+        }
 
         return $this;
     }

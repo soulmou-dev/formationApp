@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TeacherRepository::class)]
+#[ORM\Table(uniqueConstraints: [new ORM\UniqueConstraint(name: 'unique_teacher', columns: ['lastname','firstname'])])]
 #[UniqueEntity(fields: ['lastname','firstname'], message: 'Cet enseignant existe déja.')]
 class Teacher
 {
