@@ -1,4 +1,4 @@
-import './bootstrap.js';
+//import './bootstrap.js';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -6,5 +6,10 @@ import './bootstrap.js';
  * which should already be in your base.html.twig.
  */
 import './styles/app.css';
+import 'bootstrap';
+import '@fortawesome/fontawesome-free'; // charge les JS par défaut
+import '@fortawesome/fontawesome-free/css/fontawesome.min.css'; // charge le CSS de base
+import '@fortawesome/fontawesome-free/css/solid.min.css'; // charge le CSS de base
+import '@fortawesome/fontawesome-free/css/brands.min.css'; // charge le CSS de base
+import $ from 'jquery';
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
