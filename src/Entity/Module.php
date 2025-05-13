@@ -7,11 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Entity\Traits\TimestampableTrait;
 
 #[ORM\Entity(repositoryClass: ModuleRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields: ['name',], message: 'Cet module existe déja.')]
 class Module
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -32,24 +36,17 @@ class Module
     #[ORM\OneToMany(targetEntity: Teacher::class, mappedBy: 'module')]
     private Collection $teachers;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?\DateTime $updatedAt = null;
-
     /**
      * @var Collection<int, Classroom>
      */
     #[ORM\ManyToMany(targetEntity: Classroom::class, mappedBy: 'modules')]
-    private Collection $modules;
+    private Collection $classrooms;
 
     public function __construct()
     {
-        $this->createdAt = new \DateTimeImmutable();
         $this->courses = new ArrayCollection();
         $this->teachers = new ArrayCollection();
-        $this->modules = new ArrayCollection();
+        $this->classrooms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -129,52 +126,28 @@ class Module
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTime $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Classroom>
      */
-    public function getModules(): Collection
+    public function getClassrooms(): Collection
     {
-        return $this->modules;
+        return $this->classrooms;
     }
 
-    public function addModule(Classroom $module): static
+    public function addClassroom(Classroom $classroom): static
     {
-        if (!$this->modules->contains($module)) {
-            $this->modules->add($module);
-            $module->addModule($this);
+        if (!$this->classrooms->contains($classroom)) {
+            $this->classrooms->add($classroom);
+            $classroom->addModule($this);
         }
 
         return $this;
     }
 
-    public function removeModule(Classroom $module): static
+    public function removeClassroom(Classroom $classroom): static
     {
-        if ($this->modules->removeElement($module)) {
-            $module->removeModule($this);
+        if ($this->classrooms->removeElement($classroom)) {
+            $classroom->removeModule($this);
         }
 
         return $this;

@@ -7,11 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Entity\Traits\TimestampableTrait;
 
 #[ORM\Entity(repositoryClass: ClassroomRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields: ['name',], message: 'Cette classe existe déja.')]
 class Classroom
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -32,7 +36,7 @@ class Classroom
     /**
      * @var Collection<int, Module>
      */
-    #[ORM\ManyToMany(targetEntity: Module::class, inversedBy: 'modules')]
+    #[ORM\ManyToMany(targetEntity: Module::class, inversedBy: 'classrooms')]
     private Collection $modules;
 
     public function __construct()

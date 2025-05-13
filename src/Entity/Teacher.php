@@ -5,12 +5,16 @@ namespace App\Entity;
 use App\Repository\TeacherRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Entity\Traits\TimestampableTrait;
 
 #[ORM\Entity(repositoryClass: TeacherRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Table(uniqueConstraints: [new ORM\UniqueConstraint(name: 'unique_teacher', columns: ['lastname','firstname'])])]
 #[UniqueEntity(fields: ['lastname','firstname'], message: 'Cet enseignant existe déja.')]
 class Teacher
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -27,17 +31,6 @@ class Teacher
 
     #[ORM\ManyToOne(inversedBy: 'teachers')]
     private ?Module $module = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?\DateTime $updatedAt = null;
-
-    public function __construct()
-    {
-        $this->createdAt = new \DateTimeImmutable();
-    }
 
     public function getId(): ?int
     {
@@ -88,30 +81,6 @@ class Teacher
     public function setModule(?Module $module): static
     {
         $this->module = $module;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTime $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }
