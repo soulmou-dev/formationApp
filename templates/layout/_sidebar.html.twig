@@ -1,0 +1,13 @@
+<!-- Sidebar -->
+<nav class="sidebar-app col-md-2 d-none d-md-block d-none border-end h-auto shadow">
+    <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link {% if app.request.attributes.get('_route') == 'home_index' %}active{% endif %}" href="{{ path(name = 'home_index')}}">Acceuil</a></li>
+            <li class="nav-item"><a class="nav-link {% if app.request.attributes.get('_route') == 'classroom_index' %}active{% endif %}" href="{{ path(name = 'classroom_index')}}">Classes</a></li>
+            <li class="nav-item"><a class="nav-link {% if app.request.attributes.get('_route') == 'module_index' %}active{% endif %}" href="{{ path(name = 'module_index')}}">Modules</a></li>
+            <li class="nav-item"><a class="nav-link {% if app.request.attributes.get('_route') == 'course_index' %}active{% endif %}" href="{{ path(name = 'course_index')}}">Cours</a></li>
+            <li class="nav-item"><a class="nav-link {% if app.request.attributes.get('_route') == 'teacher_index' %}active{% endif %}" href="{{ path(name = 'teacher_index')}}">Enseignants</a></li>
+            <li class="nav-item"><a class="nav-link {% if app.request.attributes.get('_route') == 'student_index' %}active{% endif %}" href="{{ path(name = 'student_index')}}">Etudiants</a></li>
+        </ul>
+    </div>
+</nav>

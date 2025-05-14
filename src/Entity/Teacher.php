@@ -27,7 +27,7 @@ class Teacher
     private ?string $firstname = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $dateOfBirth = null;
+    private ?\DateTime $dateOfBirth = null;
 
     #[ORM\ManyToOne(inversedBy: 'teachers')]
     private ?Module $module = null;
@@ -61,7 +61,7 @@ class Teacher
         return $this;
     }
 
-    public function getDateOfBirth(): ?\DateTimeImmutable
+    public function getDateOfBirth(): ?\DateTime
     {
         return $this->dateOfBirth;
     }

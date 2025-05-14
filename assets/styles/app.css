@@ -1,3 +1,44 @@
-body {
-    background-color: skyblue;
+:root {
+  --gray: #6c757d ;
+  --sidebar-bg: #2E3138;
+  --sidebar-color: #CCCCCC;
+  --pistachio_light: #6DD14F;
+  --pistachio_dark: #5AB63F;
+}
+
+.app-name, .app-name:hover
+{
+    color: var(--pistachio_light);
+}
+.sidebar-app {
+    background-color:  var(--sidebar-bg);
+}
+
+.sidebar-app .nav-link {
+    color: var( --sidebar-color) !important;
+    border-bottom: 1px solid var( --sidebar-color);
+    
+}
+
+.sidebar-app  a.active ,.nav-link:hover {
+   font-weight: bold;
+}
+
+.sidebar-app  a.active
+{
+    color: var(--pistachio_dark) !important;
+}
+
+.app-table-list > thead > tr > th {
+    background-color:var(--pistachio_dark);
+    color: white;
+}
+
+.pagination > li > a{
+    color: var(--pistachio_dark) !important;
+}
+
+.pagination > li.active > span{
+    background-color: var(--pistachio_dark) !important;
+    border: 1px solid var(--pistachio_dark) !important;
 }
