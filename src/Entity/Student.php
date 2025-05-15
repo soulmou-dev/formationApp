@@ -26,8 +26,8 @@ class Student
     #[ORM\Column(length: 255)]
     private ?string $firstname = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $dateOfBirth = null;
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?\DateTimeInterface  $dateOfBirth = null;
 
     #[ORM\ManyToOne(inversedBy: 'students')]
     private ?Classroom $classroom = null;
@@ -61,12 +61,12 @@ class Student
         return $this;
     }
 
-    public function getDateOfBirth(): ?\DateTimeImmutable
+    public function getDateOfBirth(): ?\DateTimeInterface
     {
         return $this->dateOfBirth;
     }
 
-    public function setDateOfBirth(?\DateTimeImmutable $dateOfBirth): static
+    public function setDateOfBirth(?\DateTimeInterface $dateOfBirth): static
     {
         $this->dateOfBirth = $dateOfBirth;
 
