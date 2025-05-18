@@ -1,0 +1,63 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Etudiant - Nouveau
+{% endblock %}
+
+{% block stylesheets %}
+ <style type="text/css">
+
+ </style>
+{% endblock %}
+
+{% block body %}
+
+<div class="ml-0 p-1">   
+    <h4>{{ student.id is null ? 'Nouvel étudiant' : 'Modification de l\'étudant ' ~ student.id  }}</h4> 
+    <div class="row">
+        <div class="col-lg-8 col-md-12 col-sm-12">
+            {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    {{ form_label(form.lastname, 'Nom') }}
+                    {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.lastname) }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    {{ form_label(form.firstname, 'Prénom') }}
+                    {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.firstname, {'attr': {'class': 'invalid-feedback'}}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    {{ form_label(form.email, 'Email') }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.email, {'attr': {'class': 'invalid-feedback'}}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    {{ form_label(form.dateOfBirth, 'Date de naissance') }}
+                    {{ form_widget(form.dateOfBirth, {'attr': {'class': 'form-control w-100'}}) }}
+                    {{ form_errors(form.dateOfBirth) }}
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{ form_label(form.classroom, 'Classe') }}
+                    {{ form_widget(form.classroom, {'attr': {'class': 'form-select w-100'}}) }}
+                    {{ form_errors(form.classroom) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3 text-start">
+                {{ form_widget(form.save) }}
+                </div>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

@@ -27,7 +27,7 @@
             <th scope="row">{{ class.id}}</th>
             <td>{{ class.name}}</td>
             <td>{{ class.year}}</td>
-            <td class="d-flex-inline justify-content-end gap-2">
+            <td class="d-flex justify-content-end gap-2">
                 <a class="text-danger" title="supprimer" href="#"><i class="fas fa-trash"></i></a>
                 <a class="text-secondary" title="éditer" href="#"> <i class="fas fa-edit"></i></a>
             </td>
@@ -36,25 +36,15 @@
     <tbody>
 </table> 
 
+{% if totalPages > 1 %}
+  {% include 'components/paginator/_pagination.html.twig' with {
+      page: currentPage,
+      pages: totalPages
+  } %}
+{% endif %}  
 
-<nav class="pt-1" aria-label="Navigation des pages">
-  <ul class="pagination justify-content-center">
-    <li class="page-item disabled">
-      <span class="page-link">Previous</span>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item active">
-      <span class="page-link">
-        2
-        <span class="sr-only">(current)</span>
-      </span>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Next</a>
-    </li>
-  </ul>
-</nav>
+
+
 
 
 

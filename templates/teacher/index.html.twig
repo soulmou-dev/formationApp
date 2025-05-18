@@ -12,52 +12,44 @@
 
 {% block body %}
 <h3>Liste des enseignants</h3>
-<table class="app-table-list table table-striped table-hover">
-    <thead style="background-color: rgb(204, 23, 99) !important;">
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nom</th>
-            <th scope="col">Prénom</th>
-            <th scope="col">Age</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for teacher in teachers %}
-        <tr>
-            <th scope="row">{{ teacher.id}}</th>
-            <td>{{ teacher.lastname}}</td>
-            <td>{{ teacher.firstname}}</td>
-            <td>{{ teacher.dateOfBirth.diff(date("now"|date)).y}} ans</td>
-            <td class="d-flex-inline justify-content-end gap-2">
-                <a class="text-danger" title="supprimer" href="#"><i class="fas fa-trash"></i></a>
-                <a class="text-secondary" title="éditer" href="#"> <i class="fas fa-edit"></i></a>
-            </td>
-        </tr>
-    {% endfor %}
-    <tbody>
-</table> 
+{% if teachers %}
+  <table class="app-table-list table table-striped table-hover">
+      <thead style="background-color: rgb(204, 23, 99) !important;">
+          <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Prénom</th>
+              <th scope="col">Age</th>
+              <th scope="col"></th>
+          </tr>
+      </thead>
+      <tbody>
+      {% for teacher in teachers %}
+          <tr>
+              <th scope="row">{{ teacher.id}}</th>
+              <td>{{ teacher.lastname}}</td>
+              <td>{{ teacher.firstname}}</td>
+              <td>{{ teacher.dateOfBirth.diff(date("now"|date)).y}} ans</td>
+              <td class="d-flex justify-content-end gap-2">
+                  <a class="text-danger" title="supprimer" href="#"><i class="fas fa-trash"></i></a>
+                  <a class="text-secondary" title="éditer" href="#"> <i class="fas fa-edit"></i></a>
+              </td>
+          </tr>
+      {% endfor %}
+      <tbody>
+  </table> 
 
+  {% if totalPages > 1 %}
+    {% include 'components/paginator/_pagination.html.twig' with {
+        page: currentPage,
+        pages: totalPages
+    } %}
+  {% endif %}
 
-<nav class="pt-1" aria-label="Navigation des pages">
-  <ul class="pagination justify-content-center">
-    <li class="page-item disabled">
-      <span class="page-link">Previous</span>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item active">
-      <span class="page-link">
-        2
-        <span class="sr-only">(current)</span>
-      </span>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Next</a>
-    </li>
-  </ul>
-</nav>
-
-
+{% else %}  
+  <div class="alert alert-warning" role="alert">
+    Aucun résultat trouvé
+  </div>
+{% endif %} 
 
 {% endblock %}

@@ -20,5 +20,15 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\EventListener\StudentRegisteredListener:
+        tags:
+            - { name: kernel.event_listener, event: student.registered, method: onStudentRegistered }
+    App\EventListener\MustChangePasswordListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+    App\EventListener\PasswordChangedListener:
+        tags:
+            - { name: kernel.event_listener, event: user.password_changed, method: onPasswordChanged }
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

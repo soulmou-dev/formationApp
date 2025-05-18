@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\StudentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Traits\TimestampableTrait;
 
 #[ORM\Entity(repositoryClass: StudentRepository::class)]
@@ -21,16 +22,37 @@ class Student
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'le Nom est obligatoire.')]
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: 'Le nom doit contenir au moins 3 caractères.',
+        maxMessage: 'Le nom ne peut pas dépasser 50 caractères.'
+    )]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'le Prénom est obligatoire.')]
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: 'Le prénom doit contenir au moins 3 caractères.',
+        maxMessage: 'Le prénom ne peut pas dépasser 50 caractères.'
+    )]
     private ?string $firstname = null;
 
     #[ORM\Column(type: 'date', nullable: true)]
+    #[Assert\NotBlank(message: 'la date de naissance est obligatoire')]
     private ?\DateTimeInterface  $dateOfBirth = null;
 
     #[ORM\ManyToOne(inversedBy: 'students')]
+    #[Assert\NotNull(message: "La classe est obligatoire.")]
+    #[Assert\Valid]
     private ?Classroom $classroom = null;
+
+    #[ORM\OneToOne(inversedBy: 'student', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -81,6 +103,18 @@ class Student
     public function setClassroom(?Classroom $classroom): static
     {
         $this->classroom = $classroom;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Etudiant - modification
+{% endblock %}
+
+{% block stylesheets %}
+ <style type="text/css">
+
+ </style>
+{% endblock %}
+
+{% block body %}
+    <h4>Détail étudiant</h4>
+    <ul>
+        <li>ID: {{student.id}}</li>
+        <li>nom: {{student.lastname}}</li>
+        <li>prénom: {{student.firstname}}</li>
+        <li>age: {{student.dateOfBirth.diff(date("now"|date)).y}} ans</li>
+          <li>classe: {{student.classroom.getName}}</li>
+    </ul>
+{% endblock %}
