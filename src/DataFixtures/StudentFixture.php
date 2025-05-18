@@ -4,14 +4,19 @@ namespace App\DataFixtures;
 
 use App\Entity\Student;
 use App\Entity\Classroom;
+use App\Entity\User;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class StudentFixture extends Fixture implements DependentFixtureInterface
 {
+    public function __construct(private UserPasswordHasherInterface $passwordHasher){
+
+    }
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
@@ -31,7 +36,19 @@ class StudentFixture extends Fixture implements DependentFixtureInterface
                 $student->setDateOfBirth  ($dateBirth);
                 $student->setClassroom($classroom);
 
+
+
+                $user = new User();
+                $user->setEmail(strtolower($student->getFirstname() . '.' . $student->getLastname() . $i . $j . '@example.com'));
+                $user->setRoles(['ROLE_STUDENT']);
+                $user->setPassword($this->passwordHasher->hashPassword($user, 'password123'));
+
+                // Liaison
+                $student->setUser($user);
+                $user->setStudent($student);
+
                 $manager->persist($student);
+
             }
         }
 
