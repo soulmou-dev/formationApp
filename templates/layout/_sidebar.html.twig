@@ -1,5 +1,6 @@
 <!-- Sidebar -->
-<nav class="sidebar-app col-md-2 d-none d-md-block d-none border-end h-auto shadow">
+
+<nav id="sidebar" class="sidebar-app col-md-2 d-none d-md-block d-none border-end vh-100  position-fixed shadow">
     <div class="position-sticky pt-3">
         <ul class="nav flex-column">
             <li class="nav-item"><a class="nav-link {% if app.request.attributes.get('_route') == 'home_index' %}active{% endif %}" href="{{ path(name = 'home_index')}}">Acceuil</a></li>
@@ -7,7 +8,28 @@
             <li class="nav-item"><a class="nav-link {% if app.request.attributes.get('_route') == 'module_index' %}active{% endif %}" href="{{ path(name = 'module_index')}}">Modules</a></li>
             <li class="nav-item"><a class="nav-link {% if app.request.attributes.get('_route') == 'course_index' %}active{% endif %}" href="{{ path(name = 'course_index')}}">Cours</a></li>
             <li class="nav-item"><a class="nav-link {% if app.request.attributes.get('_route') == 'teacher_index' %}active{% endif %}" href="{{ path(name = 'teacher_index')}}">Enseignants</a></li>
-            <li class="nav-item"><a class="nav-link {% if app.request.attributes.get('_route') == 'student_index' %}active{% endif %}" href="{{ path(name = 'student_index')}}">Etudiants</a></li>
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle {% if app.request.attributes.get('_route') starts with 'student_' %}active{% endif %}" data-bs-toggle="collapse" href="#submenu-student" role="button" aria-expanded="{% if app.request.attributes.get('_route') starts with 'student_' %}true{% else %}false{% endif %}" aria-controls="submenu-student">
+                Etudiants
+                </a>
+                <div class="collapse ps-3 {% if app.request.attributes.get('_route') starts with 'student_' %}show{% endif %}" id="submenu-student">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="{{ path(name = 'student_add')}}" class="nav-link"><i class="fa-solid fa-square-plus"></i> Ajouter</a></li>
+                    <li><a href="{{ path(name = 'student_list')}}" class="nav-link"><i class="fa-solid fa-list"></i> Liste</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#submenu1" role="button" aria-expanded="false" aria-controls="submenu1">
+                Gestion des cours
+                </a>
+                <div class="collapse ps-3" id="submenu1">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="#" class="nav-link"><i class="fa-solid fa-square-plus"></i> Ajouter</a></li>
+                    <li><a href="#" class="nav-link"><i class="fa-solid fa-list"></i> Liste</a></li>
+                    </ul>
+                </div>
+            </li>
         </ul>
-    </div>
+    </div>  
 </nav>

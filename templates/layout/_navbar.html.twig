@@ -1,17 +1,46 @@
 <!-- _navbar.html.twig -->
        <!-- ✅ Navbar en haut -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
     <div class="container-fluid">
         <a class="app-name navbar-brand" href="#" >FormationApp</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
+        {% if app.user %}
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link active" href="#">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Modules</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Students</a></li>
+                <li class="nav-item text-white">
+                    <span class="nav-link active">
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <span class="fw-bold">Super Admin:</span> {{ app.user.email }}
+                    {% elseif is_granted('ROLE_ADMIN') %}
+                        <span class="fw-bold">Admin:</span> {{ app.user.email }}
+                    {% elseif is_granted('ROLE_TEACHER') and  app.user and app.user.teacher %}
+                        <span class="fw-bold">Enseignant:</span> {{ app.user.teacher.firstname }} {{ app.user.teacher.lastname }}
+                    {% elseif is_granted('ROLE_STUDENT') and app.user and app.user.student %}
+                            <span class="fw-bold">Étudiant:</span> {{ app.user.student.firstname }} {{ app.user.student.lastname }}
+                    {% endif %}
+                    </span>
+                </li>
+               
+                <!-- Dropdown item -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuUser"
+                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuUser">
+                        {% if app.user and app.user.isMustChangePassword == false %}
+                        <li><a class="dropdown-item" href="#">Profil</a></li>
+                        <li><a class="dropdown-item" href="#">Paramètres</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        {% endif %}
+                        <li><a class="dropdown-item" href="{{path(name = 'app_logout')}}">Déconnexion</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
+        {% endif %}
     </div>
 </nav>
