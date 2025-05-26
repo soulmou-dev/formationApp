@@ -17,11 +17,13 @@ class UserFixture extends Fixture
         $user = new User();
         $user->setEmail('admin@example.com');
         $user->setRoles(['ROLE_ADMIN']);
+        $user->setMustChangePassword(false);
         $user->setPassword($this->passwordHasher->hashPassword($user, 'password123'));
 
         $user2 = new User();
         $user2->setEmail('superadmin@example.com');
         $user2->setRoles(['ROLE_SUPER_ADMIN']);
+        $user2->setMustChangePassword(false);
         $user2->setPassword($this->passwordHasher->hashPassword($user2, 'password123'));
 
         $manager->persist($user);
