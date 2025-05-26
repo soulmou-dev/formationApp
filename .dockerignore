@@ -1,0 +1,10 @@
+vendor/
+node_modules/
+.git/
+var/
+tests/
+.env
+.DS_Store
+compose.override.yaml
+compose.yaml
+docker-compose.yaml
