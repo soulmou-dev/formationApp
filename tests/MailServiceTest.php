@@ -19,7 +19,7 @@ class MailServiceTest extends  TestCase
         }));
     
 
-         $service= new MailService($mailer);
+        $service= new MailService($mailer);
         $service->sendWelcomeEmail('user@exemple.com');
     }
 }
