@@ -1,0 +1,58 @@
+
+services:
+  app:
+    image: ghcr.io/soulmou-dev/formationapp:latest
+    environment:
+      - DATABASE_URL: "mysql://root:root@db:3306/formationapp"
+    depends_on:
+      - database
+    networks:
+      - formationapp_network
+    restart: always
+
+    
+
+  database:
+    image: mariadb:10.4.27
+    container_name: formationapp_db
+    environment:
+      MARIADB_USER: root
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: formationapp
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "no"
+    volumes:
+      - database_data:/var/lib/mysql:rw
+      - ./var/mysql:/var/www/var
+    networks:
+      - formationapp_network
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: formationapp_phpmyadmin
+    environment:
+      PMA_HOST: database
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8081:80"
+    depends_on:
+      - database
+    networks:
+      - formationapp_network
+
+  mailer:
+    image: axllent/mailpit
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+    networks:
+      - formationapp_network
+
+volumes:
+  database_data:
+
+networks:
+  formationapp_network:
