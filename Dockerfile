@@ -21,8 +21,17 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && rm composer-setup.php
 
+# Définir le dossier de travail
+WORKDIR /var/www/html
+
+# Copier uniquement les fichiers nécessaires pour composer (cache Docker)
+COPY composer.json composer.lock ./
+
+# Installer les dépendances PHP avec Composer
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
 # Copier les fichiers de l'application
-COPY . /var/www/html
+COPY . .
 
 # Définir les bons droits pour Apache
 RUN chown -R www-data:www-data /var/www/html \
