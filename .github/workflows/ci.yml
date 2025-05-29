@@ -85,7 +85,7 @@ jobs:
           echo "DATABASE_URL=mysql://${{ secrets.DB_USER }}:${{ secrets.DB_PASSWORD }}@127.0.0.1:3306/${{ secrets.DB_NAME }}" >> .env.local
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.repository_owner }}/formationapp:latest -f docker/php/Dockerfile .
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/formationapp:latest -f Dockerfile .
 
       - name: Push Docker image
         run: docker push ghcr.io/${{ github.repository_owner }}/formationapp:latest
