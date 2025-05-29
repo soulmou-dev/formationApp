@@ -26,7 +26,7 @@ WORKDIR /var/www/html
 
 # Copier les fichiers de l'application
 COPY . .
-
+RUN ls -la /var/www/html/.env || echo ".env not found"
 # Créer un .env.local minimal pour éviter l'erreur sur DATABASE_URL
 RUN echo "APP_ENV=prod" > .env.local
 RUN echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/formationapp" >> .env.local
