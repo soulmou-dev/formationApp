@@ -28,6 +28,7 @@ WORKDIR /var/www/html
 COPY . .
 
 # Créer un .env.local minimal pour éviter l'erreur sur DATABASE_URL
+RUN echo "APP_ENV=prod" > .env.local
 RUN echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/formationapp" >> .env.local
 
 # Installer les dépendances PHP avec Composer
