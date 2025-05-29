@@ -27,6 +27,9 @@ WORKDIR /var/www/html
 # Copier les fichiers de l'application
 COPY . .
 
+# Créer un .env.local minimal pour éviter l'erreur sur DATABASE_URL
+RUN echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/formationapp" >> .env.local
+
 # Installer les dépendances PHP avec Composer
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
@@ -34,8 +37,7 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
-# Travailler dans ce répertoire
-WORKDIR /var/www/html
+
 
 # Expose uniquement HTTP (Render s'occupe du SSL)
 EXPOSE 80
