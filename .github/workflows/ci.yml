@@ -15,8 +15,7 @@ jobs:
       mysql:
         image: mariadb:10.4
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.CI_DB_ROOT_PASSWORD }}
-          MYSQL_DATABASE: formationapp_test
+          MYSQL_ROOT_PASSWORD: root
         ports:
           - 3306:3306
         options: >-
