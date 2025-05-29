@@ -38,6 +38,7 @@ jobs:
           cp .env.test .env.test.local
           sed -i '/^DATABASE_URL=/d' .env.test.local
           echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/formationapp" >> .env.test.local
+          echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/formationapp_test" >> $GITHUB_ENV
       
       - name: Installation des dépendances
         run: composer install --no-interaction --prefer-dist
