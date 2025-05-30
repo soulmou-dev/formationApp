@@ -11,14 +11,11 @@ jobs:
     name: Executer les tests unitaires
     runs-on: ubuntu-latest
 
-    env:
-      MYSQL_ROOT_PASSWORD: ${{ secrets.CI_DB_ROOT_PASSWORD }}
-      
     services:
       mysql:
         image: mariadb:10.4
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.CI_DB_ROOT_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: root
         ports:
           - 3306:3306
         options: >-
@@ -40,8 +37,8 @@ jobs:
         run: |
           cp .env.test .env.test.local
           sed -i '/^DATABASE_URL=/d' .env.test.local
-          echo "DATABASE_URL=mysql://root:${MYSQL_ROOT_PASSWORD}@127.0.0.1:3306/formationapp" >> .env.test.local
-          echo "DATABASE_URL=mysql://root:${MYSQL_ROOT_PASSWORD}@127.0.0.1:3306/formationapp_test" >> $GITHUB_ENV
+          echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/formationapp" >> .env.test.local
+          echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/formationapp_test" >> $GITHUB_ENV
       
       - name: Installation des dépendances
         run: composer install --no-interaction --prefer-dist
