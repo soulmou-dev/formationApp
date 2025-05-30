@@ -10,24 +10,14 @@ jobs:
   build-mariadb:
     name: 🏗️ Build mariadb and Push Docker Image
     runs-on: ubuntu-latest
+    env:
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
 
     permissions:
       contents: read
       packages: write
 
-    services:
-      mysql:
-        image: mariadb:10.4
-        env:
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
