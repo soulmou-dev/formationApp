@@ -11,6 +11,9 @@ jobs:
     name: Executer les tests unitaires
     runs-on: ubuntu-latest
 
+    env:
+      MYSQL_ROOT_PASSWORD: ${{ secrets.CI_DB_ROOT_PASSWORD }}
+      
     services:
       mysql:
         image: mariadb:10.4
