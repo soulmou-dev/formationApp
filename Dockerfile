@@ -27,6 +27,7 @@ WORKDIR /var/www/html
 # Copier les fichiers de l'application
 COPY . .
 
+
 # Installer les dépendances PHP avec Composer
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
