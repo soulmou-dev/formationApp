@@ -7,7 +7,8 @@ services:
       dockerfile: docker/php/Dockerfile-jenkins
     container_name: formationapp_web
     volumes:
-      - .:/app
+      - app_code:/app
+    working_dir: /app  
     depends_on:
       - database
     command: ["tail", "-f", "/dev/null"]  
@@ -20,3 +21,6 @@ services:
       MARIADB_ROOT_PASSWORD: root
       MARIADB_DATABASE: formationapp_test
       MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "no"
+
+volumes:
+  app_code:
