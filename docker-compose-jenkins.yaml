@@ -4,15 +4,13 @@ services:
     #user: 'www-data:www-data'
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/php/Dockerfile-jenkins
     container_name: formationapp_web
     volumes:
-      - .:/var/www/html
+      - .:/app
     depends_on:
       - database
-    ports:
-      - "8000:80"
-
+      
   database:
     image: mariadb:10.4.27
     container_name: formationapp_db
