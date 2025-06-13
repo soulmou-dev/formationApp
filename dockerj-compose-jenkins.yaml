@@ -1,0 +1,23 @@
+
+services:
+  web:
+    #user: 'www-data:www-data'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: formationapp_web
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - database
+    ports:
+      - "8000:80"
+
+  database:
+    image: mariadb:10.4.27
+    container_name: formationapp_db
+    environment:
+      MARIADB_USER: root
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: formationapp_test
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "no"
