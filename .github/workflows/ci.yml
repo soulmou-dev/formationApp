@@ -1,11 +1,12 @@
 name: CI/CD - FormationApp
 
-on: 
-  # a décommenter pour que ça fonctionne
-  #push:
+on:
+  push:
     #branches: [ main ]
-  #pull_request:
+    branches: [ blablablablabla ]
+  pull_request:
     #branches: [ main ]
+    branches: [ blablablablabla ]
 jobs:
 
   test:
