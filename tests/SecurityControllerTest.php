@@ -8,7 +8,7 @@ class SecurityControllerTest extends WebTestCase
 {
 
     public function testLoginPage():void{
-
+        self::bootKernel();
         $client = static::createClient();
         $client->request('GET', '/login');
 
@@ -17,7 +17,7 @@ class SecurityControllerTest extends WebTestCase
     }
 
      public function testLogoutPage():void{
-
+        self::bootKernel();
         $client = static::createClient();
         $client->request('GET', '/logout');
 

@@ -24,7 +24,7 @@ class StudentTypeTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        //self::bootKernel();
+        self::bootKernel();
         $container = static::getContainer();
         $this->formFactory = $container->get(FormFactoryInterface::class);
         $this->em = $container->get(EntityManagerInterface::class);
